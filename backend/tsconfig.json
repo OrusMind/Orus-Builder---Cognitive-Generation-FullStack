@@ -1,0 +1,68 @@
+ 
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    
+    /* Emit */
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    
+    /* Type Checking */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    
+    /* Completeness */
+    "skipLibCheck": true,
+    
+    /* Experimental */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    
+    /* Paths */
+    "baseUrl": "./src",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@system/*": ["system/*"],
+      "@trinity/*": ["trinity/*"],
+      "@engines/*": ["engines/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
+}

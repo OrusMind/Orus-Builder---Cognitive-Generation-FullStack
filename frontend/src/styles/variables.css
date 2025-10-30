@@ -1,0 +1,38 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 🎨 ORUS BUILDER - CSS VARIABLES (Additional)
+ * ═══════════════════════════════════════════════════════════════════════════
+ * Additional variables for specific components
+ */
+
+:root {
+  /* Header */
+  --header-height: 64px;
+  --header-bg: var(--surface-primary);
+  
+  /* Sidebar */
+  --sidebar-width: 256px;
+  --sidebar-collapsed-width: 64px;
+  --sidebar-bg: var(--surface-primary);
+  
+  /* Content */
+  --content-max-width: 1280px;
+  --content-padding: var(--space-lg);
+  
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-fixed: 1200;
+  --z-modal-backdrop: 1300;
+  --z-modal: 1400;
+  --z-popover: 1500;
+  --z-tooltip: 1600;
+  
+  /* Breakpoints (for JS usage) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}

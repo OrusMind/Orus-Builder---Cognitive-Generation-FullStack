@@ -1,0 +1,84 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    
+    /* Modules */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    
+    /* Type Checking - RELAXED FOR DEVELOPMENT */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    
+    /* ✅ DESABILITAR CHECKS DE VARIÁVEIS NÃO USADAS */
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    
+    /* ✅ DESABILITAR INDEX SIGNATURE CHECK (para process.env) */
+    "noUncheckedIndexedAccess": false,
+    "noPropertyAccessFromIndexSignature": false,
+    
+    "noImplicitOverride": true,
+    
+    /* Emit */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "noEmit": true,
+    
+    /* Interop Constraints */
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    
+    /* Skip Lib Check */
+    "skipLibCheck": true,
+    
+    /* Path Mapping */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@services/*": ["./src/services/*"],
+      "@store/*": ["./src/store/*"],
+      "@types/*": ["./src/types/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ],
+  "references": [
+    { "path": "./tsconfig.node.json" }
+  ]
+}
