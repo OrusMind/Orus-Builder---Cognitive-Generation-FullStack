@@ -1,0 +1,84 @@
+src/core/cig/cig-protocol.ts(74,3): error TS6133: 'ErrorResponse' is declared but its value is never read.
+src/core/cig/contract-evolution-tracking.ts(74,3): error TS6196: 'ContractValidationResult' is declared but never used.
+src/core/cig/contract-evolution-tracking.ts(75,3): error TS6196: 'BreakingChange' is declared but never used.
+src/core/cig/dependency-graph-intelligence.ts(74,3): error TS6196: 'CircularDependency' is declared but never used.
+src/core/cig/progressive-type-inference.ts(73,1): error TS6133: 'TypeValidationResult' is declared but its value is never read.
+src/core/cig/progressive-type-inference.ts(484,10): error TS6133: 'context' is declared but its value is never read.
+src/core/cig/type-coverage-metrics.ts(515,5): error TS6133: 'options' is declared but its value is never read.
+src/core/types/blueprint.types.ts(75,3): error TS6196: 'SupportedLanguage' is declared but never used.
+src/core/types/cognitive.types.ts(73,3): error TS6196: 'BaseEntity' is declared but never used.
+src/core/types/engine-base.types.ts(72,3): error TS6196: 'BaseEntity' is declared but never used.
+src/core/types/engine-base.types.ts(74,3): error TS6196: 'HealthStatus' is declared but never used.
+src/generation/api-generator.ts(313,5): error TS6133: 'input' is declared but its value is never read.
+src/generation/architecture-designer.ts(81,10): error TS2305: Module '"../core/cig/cig-protocol"' has no exported member 'cigProtocol'.
+src/generation/architecture-designer.ts(83,20): error TS2459: Module '"../system/error-handler"' declares 'ErrorCode' locally, but it is not exported.
+src/generation/architecture-designer.ts(134,18): error TS2430: Interface 'ExtendedValidationResult' incorrectly extends interface 'CIGValidationResult'.
+  Types of property 'suggestions' are incompatible.
+    Type 'string[]' is not assignable to type 'ValidationSuggestion[]'.
+      Type 'string' is not assignable to type 'ValidationSuggestion'.
+src/generation/architecture-designer.ts(337,13): error TS2554: Expected 4-7 arguments, but got 3.
+src/generation/architecture-designer.ts(350,5): error TS6133: 'language' is declared but its value is never read.
+src/generation/architecture-designer.ts(433,20): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/generation/architecture-designer.ts(466,5): error TS6133: 'context' is declared but its value is never read.
+src/generation/architecture-designer.ts(606,29): error TS2339: Property 'isValid' does not exist on type 'CIGValidationResult'.
+src/generation/architecture-designer.ts(610,27): error TS2339: Property 'isValid' does not exist on type 'CIGValidationResult'.
+src/generation/architecture-designer.ts(619,63): error TS2339: Property 'isValid' does not exist on type 'CIGValidationResult'.
+src/generation/cig-validator.ts(80,10): error TS2305: Module '"../core/cig/cig-protocol"' has no exported member 'cigProtocol'.
+src/generation/cig-validator.ts(82,20): error TS2459: Module '"../system/error-handler"' declares 'ErrorCode' locally, but it is not exported.
+src/generation/cig-validator.ts(133,18): error TS2430: Interface 'ExtendedValidationResult' incorrectly extends interface 'CIGValidationResult'.
+  Types of property 'suggestions' are incompatible.
+    Type 'string[]' is not assignable to type 'ValidationSuggestion[]'.
+      Type 'string' is not assignable to type 'ValidationSuggestion'.
+src/generation/cig-validator.ts(336,13): error TS2554: Expected 4-7 arguments, but got 3.
+src/generation/cig-validator.ts(349,5): error TS6133: 'language' is declared but its value is never read.
+src/generation/cig-validator.ts(432,20): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/generation/cig-validator.ts(465,5): error TS6133: 'context' is declared but its value is never read.
+src/generation/cig-validator.ts(605,29): error TS2339: Property 'isValid' does not exist on type 'CIGValidationResult'.
+src/generation/cig-validator.ts(609,27): error TS2339: Property 'isValid' does not exist on type 'CIGValidationResult'.
+src/generation/cig-validator.ts(618,63): error TS2339: Property 'isValid' does not exist on type 'CIGValidationResult'.
+src/generation/component-builder.ts(35,1): error TS6133: 'dependencyResolver' is declared but its value is never read.
+src/generation/component-builder.ts(231,41): error TS2532: Object is possibly 'undefined'.
+src/generation/database-designer.ts(34,10): error TS6133: 'ExtractionResult' is declared but its value is never read.
+src/generation/database-designer.ts(275,58): error TS6133: 'dbType' is declared but its value is never read.
+src/generation/dependency-resolver.ts(81,20): error TS2459: Module '"../system/error-handler"' declares 'ErrorCode' locally, but it is not exported.
+src/generation/dependency-resolver.ts(321,13): error TS2554: Expected 4-7 arguments, but got 3.
+src/generation/dependency-resolver.ts(336,32): error TS6133: 'index' is declared but its value is never read.
+src/generation/dependency-resolver.ts(352,29): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/prompt/ambiguity-resolver.ts(79,1): error TS6133: 'cerebroConnector' is declared but its value is never read.
+src/prompt/ambiguity-resolver.ts(80,1): error TS6133: 'vozConnector' is declared but its value is never read.
+src/prompt/ambiguity-resolver.ts(81,10): error TS6133: 'contextAnalyzer' is declared but its value is never read.
+src/prompt/ambiguity-resolver.ts(402,5): error TS6133: 'input' is declared but its value is never read.
+src/prompt/ambiguity-resolver.ts(408,28): error TS6133: 'index' is declared but its value is never read.
+src/prompt/context-analyzer.ts(81,1): error TS6133: 'knowledgeRetriever' is declared but its value is never read.
+src/prompt/context-analyzer.ts(568,5): error TS6133: 'input' is declared but its value is never read.
+src/prompt/context-analyzer.ts(650,34): error TS6133: 'domain' is declared but its value is never read.
+src/prompt/conversation-manager.ts(445,5): error TS6133: 'input' is declared but its value is never read.
+src/prompt/intent-classifier.ts(80,1): error TS6133: 'cerebroConnector' is declared but its value is never read.
+src/prompt/intent-classifier.ts(82,10): error TS6133: 'naturalLanguageParser' is declared but its value is never read.
+src/prompt/natural-language-parser.ts(82,1): error TS6133: 'cognitiveProcessor' is declared but its value is never read.
+src/prompt/natural-language-parser.ts(495,40): error TS6133: 'type' is declared but its value is never read.
+src/prompt/natural-language-parser.ts(558,35): error TS6133: 'i' is declared but its value is never read.
+src/prompt/prompt-validator.ts(214,20): error TS6133: 'MAX_WORDS' is declared but its value is never read.
+src/prompt/requirements-extractor.ts(81,1): error TS6133: 'almaConnector' is declared but its value is never read.
+src/prompt/requirements-extractor.ts(82,1): error TS6133: 'cerebroConnector' is declared but its value is never read.
+src/prompt/requirements-extractor.ts(542,5): error TS6133: 'input' is declared but its value is never read.
+src/prompt/requirements-extractor.ts(581,5): error TS6133: 'intent' is declared but its value is never read.
+src/prompt/requirements-extractor.ts(614,5): error TS6133: 'input' is declared but its value is never read.
+src/prompt/requirements-extractor.ts(707,5): error TS6133: 'intent' is declared but its value is never read.
+src/system/error-handler.ts(71,15): error TS6196: 'I18nText' is declared but never used.
+src/system/health-monitor.ts(340,11): error TS6133: '_stats' is declared but its value is never read.
+src/system/logging-system.ts(73,1): error TS6133: 'I18nText' is declared but its value is never read.
+src/system/logging-system.ts(199,11): error TS6133: 'consoleFormat' is declared but its value is never read.
+src/system/security-manager.ts(566,3): error TS6133: 'metadata' is declared but its value is never read.
+src/system/validation-engine.ts(71,1): error TS6133: 'SupportedLanguage' is declared but its value is never read.
+src/trinity/cognitive-processor.ts(79,1): error TS6133: 'cerebroConnector' is declared but its value is never read.
+src/trinity/context-manager.ts(79,1): error TS6133: 'trinityCache' is declared but its value is never read.
+src/trinity/decision-engine.ts(83,1): error TS6133: 'contextManager' is declared but its value is never read.
+src/trinity/decision-engine.ts(423,11): error TS6133: 'explanationPrompt' is declared but its value is never read.
+src/trinity/decision-engine.ts(451,5): error TS6133: 'option' is declared but its value is never read.
+src/trinity/decision-engine.ts(453,5): error TS6133: 'coreDecision' is declared but its value is never read.
+src/trinity/decision-engine.ts(473,5): error TS6133: 'input' is declared but its value is never read.
+src/trinity/knowledge-retriever.ts(80,1): error TS6133: 'trinityCache' is declared but its value is never read.

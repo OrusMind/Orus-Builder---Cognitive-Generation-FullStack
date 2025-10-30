@@ -1,0 +1,85 @@
+src/App.tsx(26,8): error TS6133: 'React' is declared but its value is never read.
+src/components/common/Dropdown.tsx(136,22): error TS18048: 'option' is possibly 'undefined'.
+src/components/generation/CodePreview.tsx(25,35): error TS6133: 'useEffect' is declared but its value is never read.
+src/components/generation/CodePreview.tsx(26,18): error TS6133: 'AnimatePresence' is declared but its value is never read.
+src/components/generation/CodePreview.tsx(41,1): error TS6133: 'Button' is declared but its value is never read.
+src/components/generation/CodePreview.tsx(112,3): error TS6133: 'onFileSelect' is declared but its value is never read.
+src/components/generation/CodePreview.tsx(116,3): error TS6133: 'originalCode' is declared but its value is never read.
+src/components/generation/GenerationProgress.tsx(26,18): error TS6133: 'AnimatePresence' is declared but its value is never read.
+src/components/generation/GenerationProgress.tsx(162,3): error TS6133: 'currentStage' is declared but its value is never read.
+src/components/generation/GenerationProgress.tsx(232,17): error TS6133: 'Icon' is declared but its value is never read.
+src/components/generation/PromptInput.tsx(32,3): error TS6133: 'Send' is declared but its value is never read.
+src/components/generation/PromptInput.tsx(342,15): error TS2322: Type 'boolean | null' is not assignable to type 'boolean | undefined'.
+  Type 'null' is not assignable to type 'boolean | undefined'.
+src/components/generation/ValidationResults.tsx(34,3): error TS6133: 'ChevronRight' is declared but its value is never read.
+src/components/generation/ValidationResults.tsx(41,10): error TS2305: Module '"../../types/generation.types"' has no exported member 'CIGValidationResult'.
+src/components/generation/ValidationResults.tsx(83,6): error TS6196: 'IssueSeverity' is declared but never used.
+src/components/generation/ValidationResults.tsx(99,10): error TS6133: 'grouping' is declared but its value is never read.
+src/components/generation/ValidationResults.tsx(99,20): error TS6133: 'setGrouping' is declared but its value is never read.
+src/components/generation/ValidationResults.tsx(117,9): error TS6133: 'allIssues' is declared but its value is never read.
+src/components/generation/ValidationResults.tsx(272,28): error TS7006: Parameter 'issue' implicitly has an 'any' type.
+src/components/generation/ValidationResults.tsx(272,35): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/generation/ValidationResults.tsx(299,30): error TS7006: Parameter 'issue' implicitly has an 'any' type.
+src/components/generation/ValidationResults.tsx(299,37): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/generation/ValidationResults.tsx(326,33): error TS7006: Parameter 'issue' implicitly has an 'any' type.
+src/components/generation/ValidationResults.tsx(326,40): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/layout/Header.tsx(176,21): error TS2322: Type 'Element' is not assignable to type 'string'.
+src/components/project/ProjectList.tsx(33,3): error TS6133: 'SortAsc' is declared but its value is never read.
+src/components/project/ProjectList.tsx(34,3): error TS6133: 'ChevronDown' is declared but its value is never read.
+src/components/project/ProjectList.tsx(36,25): error TS6137: Cannot import type declaration files. Consider importing 'api.types' instead of '@types/api.types'.
+src/components/project/ProjectList.tsx(37,29): error TS2307: Cannot find module './ProjectCard' or its corresponding type declarations.
+src/hooks/useGeneration.ts(28,3): error TS2305: Module '"../types/generation.types"' has no exported member 'GenerationRequest'.
+src/hooks/useGeneration.ts(29,3): error TS2724: '"../types/generation.types"' has no exported member named 'GenerationStatusUpdate'. Did you mean 'GenerationState'?
+src/hooks/useGeneration.ts(29,3): error TS6133: 'GenerationStatusUpdate' is declared but its value is never read.
+src/hooks/useGeneration.ts(30,3): error TS2724: '"../types/generation.types"' has no exported member named 'GenerationStage'. Did you mean 'GenerationState'?
+src/hooks/useGeneration.ts(31,3): error TS2724: '"../types/generation.types"' has no exported member named 'GenerationStageStatus'. Did you mean 'GenerationState'?
+src/hooks/useGeneration.ts(32,3): error TS2724: '"../types/generation.types"' has no exported member named 'GenerationMetadata'. Did you mean 'GenerationState'?
+src/hooks/useGeneration.ts(33,3): error TS2305: Module '"../types/generation.types"' has no exported member 'TrinityStatus'.
+src/main.tsx(73,3): error TS4114: This member must have an 'override' modifier because it overrides a member in the base class 'Component<{ children: ReactNode; }, { hasError: boolean; error: Error | null; }, any>'.
+src/main.tsx(78,3): error TS4114: This member must have an 'override' modifier because it overrides a member in the base class 'Component<{ children: ReactNode; }, { hasError: boolean; error: Error | null; }, any>'.
+src/main.tsx(110,17): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/main.tsx(110,40): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/main.tsx(112,9): error TS6133: 'reportWebVitals' is declared but its value is never read.
+src/main.tsx(143,24): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/main.tsx(153,17): error TS2339: Property 'hot' does not exist on type 'ImportMeta'.
+src/main.tsx(154,15): error TS2339: Property 'hot' does not exist on type 'ImportMeta'.
+src/pages/DashboardPage.tsx(36,3): error TS6133: 'AlertCircle' is declared but its value is never read.
+src/pages/DashboardPage.tsx(41,29): error TS2307: Cannot find module '@components/project/ProjectCard' or its corresponding type declarations.
+src/pages/DashboardPage.tsx(118,19): error TS2345: Argument of type '({ id: string; name: string; description: string; framework: "react"; language: "typescript"; createdAt: Date; updatedAt: Date; status: "active"; files: never[]; } | { id: string; name: string; ... 6 more ...; files: never[]; })[]' is not assignable to parameter of type 'Project[]'.
+  Type '{ id: string; name: string; description: string; framework: "react"; language: "typescript"; createdAt: Date; updatedAt: Date; status: "active"; files: never[]; } | { id: string; name: string; ... 6 more ...; files: never[]; }' is not assignable to type 'Project'.
+    Property 'owner' is missing in type '{ id: string; name: string; description: string; framework: "react"; language: "typescript"; createdAt: Date; updatedAt: Date; status: "active"; files: never[]; }' but required in type 'Project'.
+src/pages/ProjectPage.tsx(33,3): error TS6133: 'ExternalLink' is declared but its value is never read.
+src/pages/ProjectPage.tsx(39,1): error TS6192: All imports in import declaration are unused.
+src/pages/ProjectPage.tsx(147,44): error TS2551: Property 'nuxtjs' does not exist on type '{ react: { color: string; bg: string; label: string; }; vue: { color: string; bg: string; label: string; }; angular: { color: string; bg: string; label: string; }; nextjs: { color: string; bg: string; label: string; }; }'. Did you mean 'nextjs'?
+src/pages/ProjectPage.tsx(148,26): error TS7053: Element implicitly has an 'any' type because expression of type 'ProgrammingLanguage' can't be used to index type '{ typescript: { color: string; bg: string; label: string; }; javascript: { color: string; bg: string; label: string; }; }'.
+  Property '[ProgrammingLanguage.PYTHON]' does not exist on type '{ typescript: { color: string; bg: string; label: string; }; javascript: { color: string; bg: string; label: string; }; }'.
+src/pages/ProjectPage.tsx(149,24): error TS7053: Element implicitly has an 'any' type because expression of type 'ProjectStatus' can't be used to index type '{ active: { color: string; bg: string; label: string; }; archived: { color: string; bg: string; label: string; }; draft: { color: string; bg: string; label: string; }; }'.
+  Property '[ProjectStatus.GENERATING]' does not exist on type '{ active: { color: string; bg: string; label: string; }; archived: { color: string; bg: string; label: string; }; draft: { color: string; bg: string; label: string; }; }'.
+src/services/api.service.ts(38,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/api.service.ts(39,42): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/api.service.ts(40,31): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/api.service.ts(41,39): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/api.service.ts(135,21): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/api.service.ts(159,21): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/api.service.ts(272,19): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/generation.service.ts(28,3): error TS2305: Module '"@types/generation.types"' has no exported member 'GenerationRequest'.
+src/services/generation.service.ts(29,3): error TS2305: Module '"@types/generation.types"' has no exported member 'GenerationResponse'.
+src/services/generation.service.ts(30,3): error TS2724: '"@types/generation.types"' has no exported member named 'GenerationStatusUpdate'. Did you mean 'GenerationState'?
+src/services/generation.service.ts(31,3): error TS2305: Module '"@types/generation.types"' has no exported member 'ValidationResult'.
+src/services/generation.service.ts(32,3): error TS2305: Module '"@types/generation.types"' has no exported member 'ProjectMetadata'.
+src/services/generation.service.ts(33,8): error TS6137: Cannot import type declaration files. Consider importing 'generation.types' instead of '@/types/generation.types'.
+src/services/generation.service.ts(83,11): error TS6133: 'config' is declared but its value is never read.
+src/services/generation.service.ts(90,46): error TS4111: Property 'REACT_APP_API_URL' comes from an index signature, so it must be accessed with ['REACT_APP_API_URL'].
+src/services/generation.service.ts(132,31): error TS4111: Property 'REACT_APP_WS_URL' comes from an index signature, so it must be accessed with ['REACT_APP_WS_URL'].
+src/services/generation.service.ts(376,24): error TS4111: Property 'REACT_APP_API_URL' comes from an index signature, so it must be accessed with ['REACT_APP_API_URL'].
+src/services/project.service.ts(26,69): error TS6137: Cannot import type declaration files. Consider importing 'api.types' instead of '@types/api.types'.
+src/services/project.service.ts(74,11): error TS6133: 'config' is declared but its value is never read.
+src/services/project.service.ts(81,46): error TS4111: Property 'REACT_APP_API_URL' comes from an index signature, so it must be accessed with ['REACT_APP_API_URL'].
+src/services/project.service.ts(339,24): error TS4111: Property 'REACT_APP_API_URL' comes from an index signature, so it must be accessed with ['REACT_APP_API_URL'].
+src/store/auth.store.ts(27,68): error TS6137: Cannot import type declaration files. Consider importing 'api.types' instead of '@types/api.types'.
+src/store/collaboration.store.ts(27,56): error TS6137: Cannot import type declaration files. Consider importing 'collaboration.types' instead of '@/types/collaboration.types'.
+src/store/project.store.ts(27,35): error TS6137: Cannot import type declaration files. Consider importing 'api.types' instead of '@types/api.types'.
+src/store/project.store.ts(63,11): error TS6133: 'get' is declared but its value is never read.
+src/types/generation.types.ts(25,10): error TS6133: 'Framework' is declared but its value is never read.
+src/types/generation.types.ts(25,21): error TS6133: 'ProgrammingLanguage' is declared but its value is never read.
+src/types/project.types.ts(25,57): error TS6133: 'FileNode' is declared but its value is never read.

@@ -1,0 +1,47 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * ORUS BUILDER - DESIGN TOKENS
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+
+export const designTokens = {
+  colors: {
+    primary: {
+      50: '#eef2ff',
+      500: '#6366f1',
+      600: '#4f46e5',
+      700: '#4338ca',
+    },
+    secondary: {
+      500: '#8b5cf6',
+      600: '#7c3aed',
+    },
+    accent: {
+      500: '#ec4899',
+      600: '#db2777',
+    },
+  },
+  
+  spacing: {
+    card: '1.5rem', // 24px
+    section: '4rem', // 64px
+  },
+  
+  borderRadius: {
+    card: '0.75rem', // 12px
+    button: '0.5rem', // 8px
+  },
+  
+  shadows: {
+    card: '0 1px 3px rgba(0, 0, 0, 0.1)',
+    cardHover: '0 10px 15px rgba(99, 102, 241, 0.1)',
+    glow: '0 0 20px rgba(99, 102, 241, 0.3)',
+  },
+  
+  transitions: {
+    fast: '150ms cubic-bezier(0.4, 0, 0.2, 1)',
+    base: '200ms cubic-bezier(0.4, 0, 0.2, 1)',
+  },
+} as const;
+
+export type DesignTokens = typeof designTokens;

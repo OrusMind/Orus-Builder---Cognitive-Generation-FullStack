@@ -1,0 +1,386 @@
+/**
+ * ============================================================================
+ * ORUS BUILDER - EDITOR PAGE
+ * ============================================================================
+ * 
+ * DEVELOPER: Tulio (ORUS Creator)
+ * CREATED: 2025-10-10T08:57:00-03:00
+ * LAST_MODIFIED: 2025-10-10T08:57:00-03:00
+ * COMPONENT_HASH: orus.frontend.page.editor.20251010.EDP5K6L7
+ * 
+ * PURPOSE:
+ * - Full-featured code editor page
+ * - Combines CodeEditor, FileTree, Terminal, and Preview
+ * - Split panes with resizable layout
+ * - Multi-tab file editing
+ * 
+ * COGNITIVE AGENT DNA:
+ * - AGENT_TYPE: EditorOrchestratorAgent
+ * - COGNITIVE_LEVEL: Advanced
+ * - AUTONOMY_DEGREE: 85
+ * - TRINITY_INTEGRATED: Full (Code Intelligence)
+ * ============================================================================
+ */
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { clsx } from 'clsx';
+import Split from 'react-split';
+import {
+  Save,
+  Play,
+  Download,
+  Settings,
+  Menu,
+  X,
+} from 'lucide-react';
+import { Navigation } from '@components/layout/Navigation';
+import { CodeEditor } from '@components/editor/CodeEditor';
+import { FileTree } from '@components/editor/FileTree';
+import { Terminal } from '@components/editor/Terminal';
+import { PreviewPane } from '@components/editor/PreviewPane';
+import { Button } from '@components/common/Button';
+import { useEditorStore } from '@store/editor.store';
+import { useProjectStore } from '@store/project.store';
+import { FileNode } from '@/types/api.types';
+import toast from 'react-hot-toast';
+
+// ============================================================================
+// EDITOR PAGE COMPONENT
+// ============================================================================
+
+export const EditorPage: React.FC = () => {
+  const { projectId } = useParams<{ projectId: string }>();
+  const navigate = useNavigate();
+
+  const {
+    openFiles,
+    activeFileId,
+    setActiveFile,
+    openFile,
+    closeFile,
+    updateFileContent,
+  } = useEditorStore();
+
+  const { projects, isLoading } = useProjectStore();
+
+  const [showFileTree, setShowFileTree] = useState(true);
+  const [showTerminal, setShowTerminal] = useState(true);
+  const [showPreview, setShowPreview] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Get current project
+  const project = projects.find((p) => p.id === projectId);
+
+  // Mock file tree data
+  const [fileTree, setFileTree] = useState<FileNode[]>([
+    {
+      id: '1',
+      name: 'src',
+      path: '/src',
+      type: 'folder',
+      children: [
+        {
+          id: '2',
+          name: 'App.tsx',
+          path: '/src/App.tsx',
+          type: 'file',
+          content: `import React from 'react';\n\nfunction App() {\n  return (\n    <div className="App">\n      <h1>Hello ORUS!</h1>\n    </div>\n  );\n}\n\nexport default App;`,
+        },
+        {
+          id: '3',
+          name: 'index.tsx',
+          path: '/src/index.tsx',
+          type: 'file',
+          content: `import React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App';\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);`,
+        },
+        {
+          id: '4',
+          name: 'components',
+          path: '/src/components',
+          type: 'folder',
+          children: [
+            {
+              id: '5',
+              name: 'Header.tsx',
+              path: '/src/components/Header.tsx',
+              type: 'file',
+              content: `import React from 'react';\n\nexport const Header = () => {\n  return <header>Header Component</header>;\n};`,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: '6',
+      name: 'package.json',
+      path: '/package.json',
+      type: 'file',
+      content: `{\n  "name": "orus-project",\n  "version": "1.0.0",\n  "type": "module"\n}`,
+    },
+  ]);
+
+  useEffect(() => {
+    if (!project) {
+      toast.error('Project not found');
+      navigate('/projects');
+    }
+  }, [project, navigate]);
+
+  // Handle file selection
+  const handleFileSelect = (file: FileNode) => {
+    if (file.type === 'file') {
+      openFile(file);
+      setActiveFile(file.id);
+    }
+  };
+
+  // Handle file content change
+  const handleFileChange = (content: string) => {
+    if (activeFileId) {
+      updateFileContent(activeFileId, content);
+    }
+  };
+
+  // Handle file save
+  const handleFileSave = async (content: string) => {
+    if (!activeFileId) return;
+
+    setIsSaving(true);
+    try {
+      // TODO: Implement actual save to backend
+      updateFileContent(activeFileId, content);
+      toast.success('File saved successfully');
+    } catch (error) {
+      toast.error('Failed to save file');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Handle file context menu actions
+  const handleFileContextMenu = (file: FileNode, action: string) => {
+    switch (action) {
+      case 'rename':
+        toast.info('Rename file (coming soon)');
+        break;
+      case 'delete':
+        toast.info('Delete file (coming soon)');
+        break;
+      case 'duplicate':
+        toast.info('Duplicate file (coming soon)');
+        break;
+      case 'new-file':
+        toast.info('New file (coming soon)');
+        break;
+    }
+  };
+
+  // Get active file
+  const activeFile = openFiles.find((f) => f.id === activeFileId);
+
+  // Get preview content
+  const getPreviewContent = () => {
+    const htmlFile = openFiles.find((f) => f.name.endsWith('.html'));
+    const cssFile = openFiles.find((f) => f.name.endsWith('.css'));
+    const jsFile = openFiles.find((f) => f.name.endsWith('.js') || f.name.endsWith('.jsx'));
+
+    return {
+      html: htmlFile?.content || activeFile?.content || '',
+      css: cssFile?.content || '',
+      javascript: jsFile?.content || '',
+    };
+  };
+
+  const previewContent = getPreviewContent();
+
+  if (isLoading) {
+    return (
+      <Navigation>
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-lg text-foreground-muted">Loading editor...</div>
+        </div>
+      </Navigation>
+    );
+  }
+
+  return (
+    <Navigation showSidebar={false} showFooter={false}>
+      <div className="h-screen flex flex-col bg-background">
+        {/* Editor Header */}
+        <div className="flex items-center justify-between px-4 py-2 bg-background-surface border-b border-primary/20">
+          {/* Left - Project Info */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowFileTree(!showFileTree)}
+              className="p-2 rounded-lg hover:bg-background-elevated transition-colors"
+              aria-label="Toggle file tree"
+            >
+              <Menu className="w-5 h-5 text-foreground-muted" />
+            </button>
+
+            <div>
+              <h1 className="text-lg font-bold text-foreground">{project?.name}</h1>
+              <p className="text-xs text-foreground-muted">{project?.framework} • {project?.language}</p>
+            </div>
+          </div>
+
+          {/* Right - Actions */}
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => handleFileSave(activeFile?.content || '')}
+              disabled={isSaving || !activeFile}
+              size="sm"
+              leftIcon={<Save className="w-4 h-4" />}
+            >
+              Save
+            </Button>
+
+            <Button
+              onClick={() => toast.info('Run project (coming soon)')}
+              variant="secondary"
+              size="sm"
+              leftIcon={<Play className="w-4 h-4" />}
+            >
+              Run
+            </Button>
+
+            <Button
+              onClick={() => toast.info('Download project (coming soon)')}
+              variant="ghost"
+              size="sm"
+              leftIcon={<Download className="w-4 h-4" />}
+            >
+              Export
+            </Button>
+          </div>
+        </div>
+
+        {/* Editor Layout */}
+        <div className="flex-1 overflow-hidden">
+          <Split
+            className="flex h-full"
+            sizes={showFileTree ? [20, 80] : [0, 100]}
+            minSize={showFileTree ? 200 : 0}
+            gutterSize={showFileTree ? 8 : 0}
+          >
+            {/* File Tree Pane */}
+            {showFileTree && (
+              <div className="h-full overflow-hidden">
+                <FileTree
+                  files={fileTree}
+                  selectedFileId={activeFileId}
+                  onFileSelect={handleFileSelect}
+                  onFileContextMenu={handleFileContextMenu}
+                />
+              </div>
+            )}
+
+            {/* Main Editor Area */}
+            <div className="h-full flex flex-col">
+              <Split
+                className="flex-1"
+                direction="vertical"
+                sizes={showPreview ? [60, 40] : [100, 0]}
+                minSize={showPreview ? 200 : 0}
+                gutterSize={showPreview ? 8 : 0}
+              >
+                {/* Code Editor */}
+                <div className="overflow-hidden">
+                  {activeFile ? (
+                    <CodeEditor
+                      value={activeFile.content}
+                      language={
+                        activeFile.name.endsWith('.ts') || activeFile.name.endsWith('.tsx')
+                          ? 'typescript'
+                          : activeFile.name.endsWith('.js') || activeFile.name.endsWith('.jsx')
+                          ? 'javascript'
+                          : activeFile.name.endsWith('.json')
+                          ? 'json'
+                          : activeFile.name.endsWith('.css')
+                          ? 'css'
+                          : activeFile.name.endsWith('.html')
+                          ? 'html'
+                          : 'plaintext'
+                      }
+                      onChange={handleFileChange}
+                      onSave={handleFileSave}
+                      height="100%"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-foreground-muted">
+                      Select a file to start editing
+                    </div>
+                  )}
+                </div>
+
+                {/* Preview or Terminal */}
+                {showPreview ? (
+                  <div className="overflow-hidden">
+                    <PreviewPane
+                      html={previewContent.html}
+                      css={previewContent.css}
+                      javascript={previewContent.javascript}
+                      hotReload={true}
+                    />
+                  </div>
+                ) : showTerminal ? (
+                  <div className="overflow-hidden">
+                    <Terminal
+                      cwd={`/projects/${projectId}`}
+                      onClose={() => setShowTerminal(false)}
+                    />
+                  </div>
+                ) : null}
+              </Split>
+            </div>
+          </Split>
+        </div>
+
+        {/* Bottom Bar - Terminal Toggle */}
+        <div className="flex items-center justify-between px-4 py-2 bg-background-surface border-t border-primary/20">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowTerminal(!showTerminal)}
+              className={clsx(
+                'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+                showTerminal
+                  ? 'bg-primary text-background'
+                  : 'text-foreground-muted hover:bg-background-elevated'
+              )}
+            >
+              Terminal
+            </button>
+
+            <button
+              onClick={() => setShowPreview(!showPreview)}
+              className={clsx(
+                'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
+                showPreview
+                  ? 'bg-primary text-background'
+                  : 'text-foreground-muted hover:bg-background-elevated'
+              )}
+            >
+              Preview
+            </button>
+          </div>
+
+          <div className="text-xs text-foreground-muted">
+            {activeFile && `${activeFile.path} • ${activeFile.content?.length || 0} characters`}
+          </div>
+        </div>
+      </div>
+    </Navigation>
+  );
+};
+
+/**
+ * EXPORT MANIFEST
+ * ============================================================================
+ * PRIMARY_EXPORT: EditorPage (Full editor page)
+ * NAMED_EXPORTS: None
+ * DEFAULT_AVAILABLE: false
+ * COMPATIBILITY: internal
+ * ============================================================================
+ */

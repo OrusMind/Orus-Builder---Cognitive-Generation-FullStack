@@ -1,0 +1,167 @@
+/**
+ * ============================================================================
+ * ORUS BUILDER - CSS CUSTOM PROPERTIES (VARIABLES)
+ * ============================================================================
+ * 
+ * DEVELOPER: Tulio (ORUS Creator)
+ * CREATED: 2025-10-09T20:38:00-03:00
+ * LAST_MODIFIED: 2025-10-09T20:38:00-03:00
+ * COMPONENT_HASH: orus.frontend.styles.variables.20251009.VAR9J0K1
+ * 
+ * PURPOSE:
+ * - CSS custom properties for Dark Cognitive theme
+ * - Light Minimal theme variables
+ * - Spacing, shadows, and transition tokens
+ * ============================================================================
+ */
+
+/* ============================================================================
+ * DARK COGNITIVE THEME (DEFAULT)
+ * ============================================================================ */
+
+:root {
+  /* Background Colors */
+  --background: 10 14 39; /* #0A0E27 - Deep blue-black */
+  --background-surface: 19 27 58; /* #131B3A - Navy surface */
+  --background-elevated: 26 35 66; /* #1A2342 - Elevated surface */
+
+  /* Foreground Colors */
+  --foreground: 240 244 255; /* #F0F4FF - Soft blue-white */
+  --foreground-muted: 139 155 198; /* #8B9BC6 - Blue-grey */
+  --foreground-subtle: 90 107 148; /* #5A6B94 - Subtle blue-grey */
+
+  /* Primary Colors */
+  --primary: 0 217 255; /* #00D9FF - Vibrant cyan */
+  --primary-hover: 0 184 220; /* #00B8DC - Hover state */
+  --primary-active: 0 151 186; /* #0097BA - Active state */
+  --primary-glow: 0 240 255; /* #00F0FF - Glow effect */
+
+  /* Secondary Colors */
+  --secondary: 99 102 241; /* #6366F1 - Indigo */
+  --secondary-hover: 85 88 227; /* #5558E3 - Hover state */
+  --secondary-active: 74 77 213; /* #4A4DD5 - Active state */
+
+  /* Accent Colors */
+  --accent: 0 255 163; /* #00FFA3 - Neon green */
+  --accent-hover: 0 229 145; /* #00E591 - Hover state */
+  --accent-success: 16 185 129; /* #10B981 - Success green */
+
+  /* Semantic Colors */
+  --success: 0 255 163; /* #00FFA3 */
+  --warning: 251 191 36; /* #FBBF24 */
+  --error: 239 68 68; /* #EF4444 */
+  --info: 0 217 255; /* #00D9FF */
+
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 217, 255, 0.3);
+  --shadow-glow-green: 0 0 20px rgba(0, 255, 163, 0.3);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-modal: 2000;
+  --z-toast: 3000;
+  --z-tooltip: 4000;
+}
+
+/* ============================================================================
+ * LIGHT MINIMAL THEME
+ * ============================================================================ */
+
+.light,
+[data-theme="light"] {
+  /* Background Colors */
+  --background: 250 251 255; /* #FAFBFF - Light blue-white */
+  --background-surface: 255 255 255; /* #FFFFFF - White */
+  --background-elevated: 248 250 255; /* #F8FAFF - Elevated surface */
+
+  /* Foreground Colors */
+  --foreground: 15 23 42; /* #0F172A - Almost black */
+  --foreground-muted: 100 116 139; /* #64748B - Blue-grey */
+  --foreground-subtle: 148 163 184; /* #94A3B8 - Subtle grey */
+
+  /* Primary Colors */
+  --primary: 37 99 235; /* #2563EB - Royal blue */
+  --primary-hover: 29 78 216; /* #1D4ED8 - Hover state */
+  --primary-active: 30 64 175; /* #1E40AF - Active state */
+
+  /* Secondary Colors */
+  --secondary: 139 92 246; /* #8B5CF6 - Purple */
+  --secondary-hover: 124 58 237; /* #7C3AED - Hover state */
+  --secondary-active: 109 40 217; /* #6D28D9 - Active state */
+
+  /* Accent Colors */
+  --accent: 16 185 129; /* #10B981 - Emerald green */
+  --accent-hover: 5 150 105; /* #059669 - Hover state */
+  --accent-success: 34 197 94; /* #22C55E - Success green */
+
+  /* Semantic Colors */
+  --success: 16 185 129; /* #10B981 */
+  --warning: 245 158 11; /* #F59E0B */
+  --error: 239 68 68; /* #EF4444 */
+  --info: 37 99 235; /* #2563EB */
+
+  /* Shadows (Lighter for light theme) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  --shadow-glow-cyan: 0 0 20px rgba(37, 99, 235, 0.2);
+  --shadow-glow-green: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+/* ============================================================================
+ * UTILITY HELPERS
+ * ============================================================================ */
+
+/* Apply RGB values with opacity */
+.bg-primary-10 {
+  background-color: rgba(var(--primary), 0.1);
+}
+
+.bg-primary-20 {
+  background-color: rgba(var(--primary), 0.2);
+}
+
+.border-primary-30 {
+  border-color: rgba(var(--primary), 0.3);
+}
+
+/* Typography Scale (matches Tailwind config) */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+}

@@ -1,0 +1,327 @@
+// frontend/src/components/generation/PreviewSandbox.tsx
+
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AlertCircle, Loader2, RefreshCw, CheckCircle } from 'lucide-react';
+
+interface PreviewSandboxProps {
+  code: string;
+  filename?: string;
+  className?: string;
+}
+
+export const PreviewSandbox: React.FC<PreviewSandboxProps> = ({
+  code,
+  filename = 'Component.tsx',
+  className = ''
+}) => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!code || code.trim() === '') {
+      setError('Nenhum código fornecido para renderizar');
+      setLoading(false);
+      return undefined; // ✅ Return explícito
+    }
+
+    try {
+      console.log('🎨 PreviewSandbox: Iniciando renderização...');
+      setLoading(true);
+      setError(null);
+      setSuccess(false);
+
+      const html = generatePreviewHTML(code, filename);
+
+      if (iframeRef.current?.contentWindow) {
+        const iframeDoc = iframeRef.current.contentWindow.document;
+        iframeDoc.open();
+        iframeDoc.write(html);
+        iframeDoc.close();
+
+        const errorHandler = (event: ErrorEvent) => {
+          console.error('❌ Preview Error:', event.error);
+          setError(event.error?.message || 'Erro desconhecido');
+          setLoading(false);
+        };
+
+        iframeRef.current.contentWindow.addEventListener('error', errorHandler);
+
+        const renderTimeout = setTimeout(() => {
+          setLoading(false);
+          setSuccess(true);
+        }, 2000);
+
+        return () => {
+          clearTimeout(renderTimeout);
+          if (iframeRef.current?.contentWindow) {
+            iframeRef.current.contentWindow.removeEventListener('error', errorHandler);
+          }
+        };
+      }
+
+      return undefined; // ✅ Return quando iframe não existe
+    } catch (err: any) {
+      console.error('❌ PreviewSandbox: Erro:', err);
+      setError(err.message || 'Erro desconhecido');
+      setLoading(false);
+      setSuccess(false);
+      return undefined; // ✅ Return no catch
+    }
+  }, [code, filename]);
+
+  const handleRetry = () => {
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+    setTimeout(() => {
+      try {
+        const html = generatePreviewHTML(code, filename);
+        if (iframeRef.current?.contentWindow) {
+          const iframeDoc = iframeRef.current.contentWindow.document;
+          iframeDoc.open();
+          iframeDoc.write(html);
+          iframeDoc.close();
+
+          setLoading(false);
+          setSuccess(true);
+        }
+      } catch (err: any) {
+        setError(err.message);
+        setLoading(false);
+      }
+    }, 500);
+  };
+
+  return (
+    <div className={`relative w-full h-full ${className}`}>
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-50 flex items-center justify-center bg-white/90 backdrop-blur-sm"
+          >
+            <div className="flex flex-col items-center space-y-4">
+              <Loader2 className="w-12 h-12 text-indigo-600 animate-spin" />
+              <p className="text-slate-700 font-medium">Renderizando componente...</p>
+            </div>
+          </motion.div>
+        )}
+
+        {error && !loading && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="absolute inset-0 z-50 flex items-center justify-center bg-red-50/90 backdrop-blur-sm"
+          >
+            <div className="bg-white p-8 rounded-xl shadow-2xl max-w-md mx-4">
+              <div className="flex items-center space-x-3 mb-4">
+                <AlertCircle className="w-8 h-8 text-red-500" />
+                <h3 className="text-xl font-bold text-slate-900">Erro ao Renderizar</h3>
+              </div>
+              <p className="text-slate-600 mb-6">{error}</p>
+              <button
+                onClick={handleRetry}
+                className="w-full flex items-center justify-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+              >
+                <RefreshCw className="w-5 h-5" />
+                <span>Tentar Novamente</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {success && !loading && !error && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-4 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2"
+          >
+            <CheckCircle className="w-5 h-5" />
+            <span className="font-medium">Renderizado!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <iframe
+        ref={iframeRef}
+        className="w-full h-full border-0 rounded-lg shadow-inner"
+        sandbox="allow-scripts allow-same-origin"
+        title="Component Preview"
+      />
+    </div>
+  );
+};
+
+// ═════════════════════════════════════════════════════════════════════════
+// 🔧 HELPER FUNCTIONS
+// ═════════════════════════════════════════════════════════════════════════
+
+function generatePreviewHTML(code: string, filename: string): string {
+  let componentName = detectComponentName(code, filename); // ✅ let em vez de const
+
+  // ✅ FALLBACK DEFINITIVO
+  if (!componentName || componentName.trim() === '') {
+    componentName = 'GeneratedComponent';
+    console.warn('⚠️ Component name detection failed, using fallback:', componentName);
+  }
+
+  console.log('🎨 Generating HTML for component:', componentName);
+
+  const cleanCode = cleanComponentCode(code);
+
+  return `
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview - ${componentName}</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    #root { width: 100vw; min-height: 100vh; }
+    .preview-error {
+      padding: 2rem;
+      background: #fee2e2;
+      color: #dc2626;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      border-left: 4px solid #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div style="padding: 2rem; text-align: center; color: #666;">
+      <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #ddd; border-top-color: #6366f1; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+      <p style="margin-top: 1rem;">Transpilando código...</p>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
+  <script type="text/babel" data-type="module">
+    ${cleanCode}
+
+    const rootElement = document.getElementById('root');
+    const root = ReactDOM.createRoot(rootElement);
+    
+    try {
+      const ComponentToRender = ${componentName};
+      
+      if (!ComponentToRender) {
+        throw new Error('Component "${componentName}" is undefined! Check export default.');
+      }
+
+      console.log('✅ Rendering component:', '${componentName}');
+      root.render(React.createElement(ComponentToRender));
+      console.log('✅ Component rendered successfully!');
+      
+    } catch (error) {
+      console.error('❌ Render error:', error);
+      rootElement.innerHTML = \`
+        <div class="preview-error">
+          <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold;">
+            ❌ Erro ao Renderizar Componente
+          </h3>
+          <p style="margin-bottom: 1rem;">
+            <strong>Componente:</strong> ${componentName}
+          </p>
+          <p style="margin-bottom: 1rem;">
+            <strong>Erro:</strong> \${error.message}
+          </p>
+          <details style="margin-top: 1rem;">
+            <summary style="cursor: pointer; font-weight: bold;">Stack Trace</summary>
+            <pre style="margin-top: 0.5rem; padding: 1rem; background: #fef2f2; border-radius: 0.5rem; overflow-x: auto;">\${error.stack}</pre>
+          </details>
+        </div>
+      \`;
+    }
+  </script>
+</body>
+</html>
+  `;
+}
+
+function detectComponentName(code: string, filename: string): string {
+  // 1. Export default
+  const exportDefaultMatch = code.match(/export\s+default\s+(?:function\s+)?(\w+)/);
+  if (exportDefaultMatch && exportDefaultMatch[1]) {
+    console.log('✅ Component name from export default:', exportDefaultMatch[1]);
+    return exportDefaultMatch[1];
+  }
+
+  // 2. Const declaration
+  const constMatch = code.match(/const\s+([A-Z]\w+)\s*[:=]\s*(?:\(\)|React\.FC|.*?=>)/);
+  if (constMatch && constMatch[1]) {
+    console.log('✅ Component name from const:', constMatch[1]);
+    return constMatch[1];
+  }
+
+  // 3. Function declaration
+  const functionMatch = code.match(/function\s+([A-Z]\w+)\s*\(/);
+  if (functionMatch && functionMatch[1]) {
+    console.log('✅ Component name from function:', functionMatch[1]);
+    return functionMatch[1];
+  }
+
+  // 4. From filename
+  const fromFilename = filename
+    .replace(/\.(tsx?|jsx?)$/, '')
+    .replace(/[-_](.)/g, (_, char) => char.toUpperCase())
+    .replace(/^(.)/, (char) => char.toUpperCase());
+  
+  console.log('⚠️ Using filename as component name:', fromFilename);
+  return fromFilename || 'Component';
+}
+
+function cleanComponentCode(code: string): string {
+  let cleaned = code;
+  const componentName = detectComponentName(code, 'Component');
+
+  console.log('🧹 Cleaning code, component name:', componentName);
+
+  // 1. Remove imports
+  cleaned = cleaned.replace(/import\s+.*?from\s+['"].*?['"];?\n?/g, '');
+
+  // 2. Add React globals
+  cleaned = `const { useState, useEffect, useCallback, useMemo, useRef } = React;\n\n${cleaned}`;
+
+  // 3. Ensure export default
+  if (!cleaned.includes('export default')) {
+    console.log('⚠️ No export default found, adding:', componentName);
+    cleaned += `\n\nexport default ${componentName};`;
+  }
+
+  // 4. Remove TypeScript types
+  cleaned = cleaned
+    .replace(/:\s*React\.FC\s*<?.*?>?/g, '')
+    .replace(/:\s*JSX\.Element/g, '')
+    .replace(/:\s*string\b/g, '')
+    .replace(/:\s*number\b/g, '')
+    .replace(/:\s*boolean\b/g, '')
+    .replace(/:\s*any\b/g, '')
+    .replace(/<[A-Z]\w+>\(/g, '(')
+    .replace(/interface\s+\w+\s*{[^}]*}/g, '');
+
+  console.log('✅ Code cleaned, length:', cleaned.length);
+  return cleaned;
+}

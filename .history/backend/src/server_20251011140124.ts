@@ -1,0 +1,246 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 🧬 ORUS BUILDER - EXPRESS SERVER (MAIN ENTRY POINT)
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+
+import express, { Application } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import compression from 'compression';
+import { createServer, Server as HTTPServer } from 'http';
+import { Server as SocketIOServer } from 'socket.io';
+import { apiRouter } from './routes/api.routes';
+import { errorHandlerMiddleware } from './middleware/error-handler.middleware';
+import { loggingMiddleware } from './middleware/logging.middleware';
+import { rateLimiterMiddleware } from './middleware/rate-limiter.middleware';
+import { logger } from './system/logging-system';
+
+// Import all engines for initialization
+import { orchestrationEngine } from './engines/orchestrator-engine';
+import { cigProtocolEngine } from './engines/cig-engine';
+
+class Server {
+  private app: Application;
+  private httpServer: HTTPServer;
+  private io: SocketIOServer;
+  private port: number;
+  
+  constructor() {
+    this.app = express();
+    this.httpServer = createServer(this.app);
+    this.io = new SocketIOServer(this.httpServer);
+    this.port = parseInt(process.env['PORT'] || '5000', 10);
+  }
+  
+  async initialize(): Promise<void> {
+    logger.info('🚀 Initializing ORUS Builder Server...', {
+      component: 'Server',
+    });
+    
+    this.configureMiddleware();
+    await this.initializeEngines();
+    this.mountRoutes();
+    this.configureWebSocket();
+    this.setupErrorHandlers();
+    
+    logger.info('✅ Server initialization complete', {
+      component: 'Server',
+    });
+  }
+  
+  private configureMiddleware(): void {
+    this.app.use(helmet());
+    this.app.use(cors({
+      origin: process.env['FRONTEND_URL'] || 'http://localhost:3000',
+      credentials: true,
+    }));
+    this.app.use(compression());
+    this.app.use(express.json({ limit: '10mb' }));
+    this.app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+    this.app.use(loggingMiddleware.logRequests);
+    this.app.use(rateLimiterMiddleware.globalLimiter);
+    
+    logger.info('Middleware configured', {
+      component: 'Server',
+    });
+  }
+  
+  private async initializeEngines(): Promise<void> {
+    logger.info('🎼 Initializing engines...', {
+      component: 'Server',
+    });
+    
+    try {
+      // ✅ FIX: Add timeout to prevent hanging
+      await Promise.race([
+        this.initializeEnginesWithTimeout(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Engine initialization timeout')), 10000)
+        )
+      ]);
+      
+      logger.info('✅ Engines initialized successfully', {
+        component: 'Server',
+      });
+      
+    } catch (error: any) {
+  logger.warn(`⚠️ Engine initialization skipped: ${error.message}`, {
+    component: 'Server'
+  });
+
+    
+    }
+  }
+  
+  private async initializeEnginesWithTimeout(): Promise<void> {
+    try {
+      await cigProtocolEngine.initialize({
+        engineId: 'cig-protocol-engine',
+        environment: process.env['NODE_ENV'] || 'development',
+        logLevel: 'info',
+        enabled: true,
+      });
+      
+      await orchestrationEngine.initialize({
+        engineId: 'orchestration-engine',
+        environment: process.env['NODE_ENV'] || 'development',
+        logLevel: 'info',
+        enabled: true,
+      });
+      
+      await orchestrationEngine.start();
+    } catch (error) {
+      logger.error('Engine initialization error', error as Error, {
+        component: 'Server',
+      });
+      throw error;
+    }
+  }
+  
+  private mountRoutes(): void {
+    this.app.get('/health', (req, res) => {
+      res.json({
+        status: 'operational',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        engines: 'mock-mode',
+      });
+    });
+    
+    this.app.use('/api', apiRouter);
+    this.app.use(errorHandlerMiddleware.notFound);
+    
+    logger.info('Routes mounted', {
+      component: 'Server',
+    });
+  }
+  
+  private configureWebSocket(): void {
+    this.io.on('connection', (socket) => {
+      logger.info('WebSocket client connected', {
+        component: 'WebSocket',
+      });
+      
+      socket.on('join-session', (sessionId: string) => {
+        socket.join(`session:${sessionId}`);
+        logger.debug('Client joined collaboration session', {
+          component: 'WebSocket',
+        });
+      });
+      
+      socket.on('leave-session', (sessionId: string) => {
+        socket.leave(`session:${sessionId}`);
+      });
+      
+      socket.on('disconnect', () => {
+        logger.debug('WebSocket client disconnected', {
+          component: 'WebSocket',
+        });
+      });
+    });
+    
+    logger.info('WebSocket configured', {
+      component: 'Server',
+    });
+  }
+  
+  private setupErrorHandlers(): void {
+    this.app.use(errorHandlerMiddleware.handle);
+    
+    logger.info('Error handlers configured', {
+      component: 'Server',
+    });
+  }
+  
+  async start(): Promise<void> {
+    await this.initialize();
+    
+    this.httpServer.listen(this.port, () => {
+      logger.info('═══════════════════════════════════════════════════════', {
+        component: 'Server',
+      });
+      logger.info('🎉🎊 ORUS BUILDER SERVER STARTED SUCCESSFULLY! 🎊🎉', {
+        component: 'Server',
+      });
+      logger.info('═══════════════════════════════════════════════════════', {
+        component: 'Server',
+      });
+      logger.info(`🌐 Server running on http://localhost:${this.port}`, {
+        component: 'Server',
+      });
+      logger.info(`📊 API available at http://localhost:${this.port}/api`, {
+        component: 'Server',
+      });
+      logger.info(`🔌 WebSocket available at ws://localhost:${this.port}`, {
+        component: 'Server',
+      });
+      logger.info(`🎼 Engines: MOCK MODE (databases not configured)`, {
+        component: 'Server',
+      });
+      logger.info('═══════════════════════════════════════════════════════', {
+        component: 'Server',
+      });
+    });
+    
+    process.on('SIGTERM', () => this.shutdown());
+    process.on('SIGINT', () => this.shutdown());
+  }
+  
+  private async shutdown(): Promise<void> {
+    logger.info('🛑 Shutting down server gracefully...', {
+      component: 'Server',
+    });
+    
+    this.httpServer.close(() => {
+      logger.info('HTTP server closed', {
+        component: 'Server',
+      });
+    });
+    
+    try {
+      await orchestrationEngine.stop();
+    } catch (error) {
+      logger.warn('Engine shutdown skipped', {
+        component: 'Server',
+      });
+    }
+    
+    logger.info('✅ Server shutdown complete', {
+      component: 'Server',
+    });
+    
+    process.exit(0);
+  }
+}
+
+// Start server
+const server = new Server();
+server.start().catch((error) => {
+  logger.error('❌ Failed to start server', error, {
+    component: 'Server',
+  });
+  process.exit(1);
+});
+
+export { server };
