@@ -258,7 +258,7 @@ LAYER 1: Core Foundation (12 components)
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/tulio-orus/orus-builder.git
+git clone https://github.com/OrusMind/Orus-Builder---Cognitive-Generation-FullStack
 cd orus-builder
 ```
 
@@ -283,7 +283,7 @@ cat > backend/.env << EOF
 NODE_ENV=development
 PORT=3000
 API_URL=http://localhost:3000
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:3000
 
 # Database (choose one)
 DATABASE_URL=postgresql://user:pass@localhost:5432/orus_builder
@@ -324,15 +324,15 @@ cd backend && npm run db:migrate && npm run db:seed
 ```bash
 # Terminal 1 - Backend
 cd backend && npm run dev
-# Expected: Server running on http://localhost:3000
+# Expected: Server running on http://localhost:5000
 
 # Terminal 2 - Frontend
 cd frontend && npm run dev
-# Expected: Frontend running on http://localhost:5173
+# Expected: Frontend running on http://localhost:3000
 ```
 
 ### Step 6: Generate Your First Code
-1. Open http://localhost:5173
+1. Open http://localhost:3000/generate
 2. Enter a prompt:
    ```
    Create a reusable button component with hover effects, 

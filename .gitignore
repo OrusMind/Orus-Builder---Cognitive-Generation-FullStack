@@ -4,3 +4,7 @@ backend/.env
 frontend/.env 
 dist/ 
 .DS_Store 
+/history
+history/
+node_modules/
+npm-debug.log*
